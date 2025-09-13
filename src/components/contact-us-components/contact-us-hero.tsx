@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 export function ContactUsHero() {
   return (
@@ -35,7 +34,7 @@ export function ContactUsHero() {
                 alt="ورزشکار فیتویار"
                 width={500}
                 height={500}
-                className="w-full "
+                className="w-[75%] lg:w-full"
                 priority
               />
             </div>

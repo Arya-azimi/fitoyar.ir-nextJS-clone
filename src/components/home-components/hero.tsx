@@ -46,7 +46,7 @@ export function HeroSection() {
               alt="ورزشکار فیتویار"
               width={500}
               height={500}
-              className="w-full "
+              className="w-[80%] lg:w-full"
               priority
             />
           </div>
