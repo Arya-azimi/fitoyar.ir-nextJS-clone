@@ -34,7 +34,7 @@ export function ContactUsHero() {
                 alt="ورزشکار فیتویار"
                 width={500}
                 height={500}
-                className="w-[75%] lg:w-full"
+                className="w-[80%] lg:w-full"
                 priority
               />
             </div>

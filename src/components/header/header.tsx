@@ -35,7 +35,7 @@ export function Header() {
               <button className="bg-white rounded-lg p-2 hover:bg-gray-300 transition-colors cursor-pointer">
                 <User size={20} className="text-gray-700" />
               </button>
-              <button className="bg-white rounded-lg p-2 hover:bg-gray-300 transition-colors relative cursor-pointer">
+              <button className="bg-white hidden rounded-lg p-2 hover:bg-gray-300 transition-colors relative cursor-pointer">
                 <div className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
                   ۰
                 </div>
@@ -57,11 +57,11 @@ export function Header() {
               </Link>
               <div className="flex-grow"></div>
               <div className="flex items-center gap-x-2">
-                <button className="cursor-pointer flex items-center gap-x-2 bg-white rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-red-700 hover:text-white transition-colors">
+                <button className="font-bold cursor-pointer border-1 border-red-600 flex items-center gap-x-2 bg-white rounded-lg px-4 py-2 text-sm text-gray-700 hover:bg-red-600 hover:text-white transition-colors">
                   <User size={18} />
                   <span>ورود / عضویت</span>
                 </button>
-                <button className="cursor-pointer flex items-center gap-x-2 bg-white rounded-lg px-4 py-2 text-sm font-medium text-gray-700 border border-red-500 relative hover:bg-red-50 transition-colors">
+                <button className="cursor-pointer hidden items-center gap-x-2 bg-white rounded-lg px-4 py-2 text-sm font-medium text-gray-700 border border-red-500 relative hover:bg-red-50 transition-colors">
                   <div className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
                     ۰
                   </div>
