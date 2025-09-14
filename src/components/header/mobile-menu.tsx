@@ -15,8 +15,8 @@ type MobileMenuProps = {
 export function MobileMenu({ isOpen, onClose, categoryTree }: MobileMenuProps) {
   return (
     <div
-      className={`fixed inset-0 z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
+      className={`fixed inset-0 z-50 right-0 transform transition-transform duration-500 ease-in-out md:hidden ${
+        isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />

@@ -1,7 +1,6 @@
 "use client";
 
 import { Category } from "@/domain/types";
-import { useState } from "react";
 import CategoryMenuItem from "./category-menu-item";
 
 type Props = {
@@ -9,24 +8,13 @@ type Props = {
 };
 
 export default function CategoryMenuPanel({ categories }: Props) {
-  const [activeSubMenu, setActiveSubMenu] = useState<Category | null>(null);
-
   return (
     <div className="relative z-10 bg-white shadow-lg">
-      <ul className="w-56 p-2">
+      <ul className="w-56">
         {categories.map((category) => (
-          <CategoryMenuItem
-            key={category._id}
-            category={category}
-            onHover={() => setActiveSubMenu(category)}
-          />
+          <CategoryMenuItem key={category._id} category={category} />
         ))}
       </ul>
-      {activeSubMenu?.children && activeSubMenu.children.length > 0 && (
-        <div className="absolute right-full top-0">
-          <CategoryMenuPanel categories={activeSubMenu.children} />
-        </div>
-      )}
     </div>
   );
 }

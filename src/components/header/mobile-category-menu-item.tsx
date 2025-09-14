@@ -43,35 +43,36 @@ export function MobileCategoryMenuItem({ category, closeMainMenu }: Props) {
   return (
     <div>
       <div
-        onClick={handleToggle}
         className={`flex cursor-pointer items-center justify-between ${itemClasses}`}
       >
-        <span>{category.title}</span>
-        <ChevronDown
-          className={`h-5 w-5 transition-transform ${
-            isOpen ? "rotate-180" : ""
-          }`}
-        />
+        <Link
+          href={`/blog?category=${category.title}`}
+          onClick={handleLinkClick}
+          className="flex-grow"
+        >
+          {category.title}
+        </Link>
+        <button onClick={handleToggle} className="p-2">
+          <ChevronDown
+            className={`h-5 w-5 transition-transform ${
+              isOpen ? "rotate-180" : ""
+            }`}
+          />
+        </button>
       </div>
       {isOpen && (
-        <div className="border-r-2 border-gray-200 pr-4">
-          <p className="">
-            <Link
-              href={`/blog?category=${category.title}`}
-              onClick={handleLinkClick}
-              className={`${itemClasses} italic `}
-            >
-              همه {category.title}
-            </Link>
-          </p>
-          {category.children?.map((child) => (
-            <MobileCategoryMenuItem
-              key={child._id}
-              category={child}
-              closeMainMenu={closeMainMenu}
-            />
-          ))}
-        </div>
+        <main>
+          <div className="border-r-2 border-gray-200 pr-4">
+            {category.children?.map((child) => (
+              <MobileCategoryMenuItem
+                key={child._id}
+                category={child}
+                closeMainMenu={closeMainMenu}
+              />
+            ))}
+          </div>
+          <hr className="border-t-2 border-gray-200 mt-2" />
+        </main>
       )}
     </div>
   );
