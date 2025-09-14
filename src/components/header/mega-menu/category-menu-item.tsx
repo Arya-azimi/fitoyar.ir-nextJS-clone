@@ -4,7 +4,7 @@ import { Category } from "@/domain/types";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import CategoryMenuPanel from "./category-menu-panel"; // خودش را فراخوانی نمی‌کند، پنل را فراخوانی می‌کند
+import CategoryMenuPanel from "./category-menu-panel";
 
 type Props = {
   category: Category;

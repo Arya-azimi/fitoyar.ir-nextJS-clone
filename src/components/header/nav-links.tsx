@@ -1,6 +1,6 @@
 import { Category } from "@/domain/types";
 import Link from "next/link";
-import CategoryMegaMenu from "./category-mega-menu";
+import CategoryMegaMenu from "./mega-menu/category-mega-menu";
 
 type Props = {
   categoryTree: Category[];

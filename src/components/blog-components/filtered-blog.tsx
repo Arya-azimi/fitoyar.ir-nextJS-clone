@@ -2,7 +2,7 @@
 
 import { Category, Post } from "@/domain/types";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import BlogFilter from "./blog-filter";
 import PostList from "./post-list";
 import { Loader2 } from "lucide-react";
@@ -14,43 +14,30 @@ type Props = {
 
 export default function FilteredBlog({ initialPosts, categories }: Props) {
   const [posts, setPosts] = useState(initialPosts);
-  const [isLoading, setIsLoading] = useState(false);
-
+  const [isPending, startTransition] = useTransition();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const category = searchParams.get("category") || "all";
-    const sortBy = searchParams.get("sortBy") || "desc";
-    const search = searchParams.get("search") || "";
-
     const fetchPosts = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(
-          `/api/search?category=${category}&sortBy=${sortBy}&search=${search}`
-        );
-        const newPosts: Post[] = await response.json();
-        setPosts(newPosts);
-      } catch (error) {
-        console.error("Failed to fetch posts:", error);
-        setPosts(initialPosts);
-      } finally {
-        setIsLoading(false);
-      }
+      const params = searchParams.toString();
+      const response = await fetch(`/api/search?${params}`);
+      const newPosts = await response.json();
+      setPosts(newPosts);
     };
 
-    if (searchParams.toString()) {
-      fetchPosts();
-    } else {
-      setPosts(initialPosts);
-    }
+    startTransition(() => {
+      if (searchParams.toString()) {
+        fetchPosts();
+      } else {
+        setPosts(initialPosts);
+      }
+    });
   }, [searchParams, initialPosts]);
 
   return (
-    <section className="max-w-6xl">
+    <section>
       <BlogFilter categories={categories} />
-
-      {isLoading ? (
+      {isPending ? (
         <div className="flex h-64 items-center justify-center">
           <Loader2 className="h-12 w-12 animate-spin text-gray-500" />
         </div>

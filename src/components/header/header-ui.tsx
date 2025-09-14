@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ShoppingCart, User, Menu } from "lucide-react";
 import { NavLinks } from "./nav-links";
 import { useState } from "react";
-import { MobileMenu } from "./mobile-menu";
+import { MobileMenu } from "./mobile-menu/mobile-menu";
 import { Category } from "@/domain/types";
 
 type Props = {
