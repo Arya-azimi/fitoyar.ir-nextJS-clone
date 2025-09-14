@@ -1,5 +1,5 @@
 import { client } from "./sanity";
-import { Post } from "@/domain";
+import { Post, Category } from "@/domain";
 import { groq } from "next-sanity";
 
 const postFields = groq`
@@ -48,4 +48,33 @@ export async function getLatestPosts(): Promise<Post[]> {
     }`
   );
   return posts;
+}
+
+export async function getAllCategories(): Promise<Category[]> {
+  return client.fetch(groq`*[_type == "category"] | order(title asc)`);
+}
+
+export async function getFilteredPosts(
+  category: string = "all",
+  sortBy: string = "desc"
+): Promise<Post[]> {
+  let query = `*[_type == "post"`;
+  let params = {};
+
+  if (category !== "all") {
+    query += ` && $category in categories[]->title`;
+    params = { ...params, category };
+  }
+
+  query += `] | order(publishedAt ${sortBy}) {
+        _id,
+        title,
+        "slug": slug.current,
+        mainImage,
+        publishedAt,
+        "author": author->{name, picture},
+        "categories": categories[]->{_id, title}
+    }`;
+
+  return client.fetch(query, params);
 }

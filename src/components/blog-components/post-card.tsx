@@ -17,7 +17,7 @@ export default function PostCard({ post }: Props) {
       href={`/blog/${post.slug}`}
       className="group block overflow-hidden  rounded-lg shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl "
     >
-      <article className="relative bg-gray-300">
+      <article className="relative">
         <div className="relative h-56 w-full overflow-hidden">
           <Image
             src={urlFor(post.mainImage).url()}
@@ -48,7 +48,7 @@ export default function PostCard({ post }: Props) {
                 {post.author.name}
               </p>
               <p className="text-xs text-black">
-                {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                {new Date(post.publishedAt).toLocaleDateString("fa-IR", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
