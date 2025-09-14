@@ -20,7 +20,7 @@ export function MobileMenu({ isOpen, onClose, categoryTree }: MobileMenuProps) {
       }`}
     >
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="fixed left-0 top-0 h-full w-4/5 max-w-sm bg-white p-6 shadow-lg">
+      <div className="fixed top-0 h-full w-4/5 max-w-sm bg-white p-6 shadow-lg">
         <div className="flex items-center justify-between">
           <Link href="/" onClick={onClose}>
             <Image

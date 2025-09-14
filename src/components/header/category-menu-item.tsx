@@ -1,7 +1,7 @@
 "use client";
 
 import { Category } from "@/domain/types";
-import { ChevronRight } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
 type Props = {
@@ -19,7 +19,7 @@ export default function CategoryMenuItem({ category, onHover }: Props) {
         className="flex items-center justify-between rounded-md p-3 hover:bg-gray-100 "
       >
         <span>{category.title}</span>
-        {hasChildren && <ChevronRight className="h-4 w-4" />}
+        {hasChildren && <ChevronLeft className="h-4 w-4" />}
       </Link>
     </li>
   );

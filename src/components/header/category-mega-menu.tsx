@@ -22,7 +22,7 @@ export default function CategoryMegaMenu({ categoryTree }: Props) {
         مقالات
       </Link>
       {isOpen && (
-        <div className="absolute left-0 top-full pt-2">
+        <div className="absolute top-full pt-2">
           <CategoryMenuPanel categories={categoryTree} />
         </div>
       )}

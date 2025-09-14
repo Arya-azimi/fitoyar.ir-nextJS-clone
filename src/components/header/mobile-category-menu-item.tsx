@@ -15,7 +15,7 @@ export function MobileCategoryMenuItem({ category, closeMainMenu }: Props) {
   const hasChildren = category.children && category.children.length > 0;
 
   const itemClasses =
-    "w-full z-50 rounded-md p-3 text-right text-lg font-semibold hover:bg-gray-100 ";
+    "w-full z-50 rounded-md p-3 text-right text-lg font-semibold hover:text-gray-600";
 
   const handleLinkClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -55,13 +55,15 @@ export function MobileCategoryMenuItem({ category, closeMainMenu }: Props) {
       </div>
       {isOpen && (
         <div className="border-r-2 border-gray-200 pr-4">
-          <Link
-            href={`/blog?category=${category.title}`}
-            onClick={handleLinkClick}
-            className={`${itemClasses} italic`}
-          >
-            همه {category.title}
-          </Link>
+          <p className="">
+            <Link
+              href={`/blog?category=${category.title}`}
+              onClick={handleLinkClick}
+              className={`${itemClasses} italic `}
+            >
+              همه {category.title}
+            </Link>
+          </p>
           {category.children?.map((child) => (
             <MobileCategoryMenuItem
               key={child._id}

@@ -12,7 +12,7 @@ export default function CategoryMenuPanel({ categories }: Props) {
   const [activeSubMenu, setActiveSubMenu] = useState<Category | null>(null);
 
   return (
-    <div className="relative rounded-lg border bg-white shadow-lg">
+    <div className="relative z-10 bg-white shadow-lg">
       <ul className="w-56 p-2">
         {categories.map((category) => (
           <CategoryMenuItem
@@ -23,7 +23,7 @@ export default function CategoryMenuPanel({ categories }: Props) {
         ))}
       </ul>
       {activeSubMenu?.children && activeSubMenu.children.length > 0 && (
-        <div className="absolute left-full top-0 ml-1">
+        <div className="absolute right-full top-0">
           <CategoryMenuPanel categories={activeSubMenu.children} />
         </div>
       )}
