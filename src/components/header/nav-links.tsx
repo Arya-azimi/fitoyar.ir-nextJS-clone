@@ -1,27 +1,34 @@
-"use client";
-
+import { Category } from "@/domain/types";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
-import { navItems } from "@/lib/constants";
+import CategoryMegaMenu from "./category-mega-menu";
 
-export function NavLinks() {
+type Props = {
+  categoryTree: Category[];
+};
+
+export function NavLinks({ categoryTree }: Props) {
   return (
-    <nav className="w-full max-w-4xl  ">
-      <div className="bg-gray-200 border-t border-gray-300 backdrop-blur-sm rounded-b-2xl p-3 flex justify-center items-center">
-        <ul className="flex items-center gap-x-8">
-          {navItems.map((item) => (
-            <li key={item.label}>
-              <Link
-                href={item.href}
-                className=" cursor-pointer flex items-center gap-x-1 text-gray-800 font-medium hover:text-red-500 transition-colors"
-              >
-                {item.label}
-                {item.isDropdown && <ChevronDown size={16} />}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+    <nav className="w-full max-w-2xl lg:max-w-4xl">
+      <ul className="flex items-center justify-center gap-x-6 bg-gray-100 shadow-md border-t border-gray-200 rounded-b-2xl px-8 py-3">
+        <li>
+          <Link href="/" className="text-black ">
+            صفحه اصلی
+          </Link>
+        </li>
+        <li>
+          <CategoryMegaMenu categoryTree={categoryTree} />
+        </li>
+        <li>
+          <Link href="/about-us" className="text-black ">
+            درباره ما
+          </Link>
+        </li>
+        <li>
+          <Link href="/contact-us" className="text-black ">
+            تماس با ما
+          </Link>
+        </li>
+      </ul>
     </nav>
   );
 }

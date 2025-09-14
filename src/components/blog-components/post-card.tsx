@@ -28,7 +28,7 @@ export default function PostCard({ post }: Props) {
         </div>
 
         <div className="flex flex-col bg-white p-5">
-          <h2 className="text-xl leading-tight font-bold text-gray-800 transition-colors duration-200 group-hover:text-blue-950 dark:group-hover:text-blue-400">
+          <h2 className="text-xl leading-tight font-bold text-gray-800 transition-colors duration-200 group-hover:text-blue-950 ">
             {post.title}
           </h2>
 

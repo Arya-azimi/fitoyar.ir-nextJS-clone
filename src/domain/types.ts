@@ -11,6 +11,8 @@ export interface Category {
   _type: "category";
   _id: string;
   title: string;
+  parent?: { _id: string; title: string };
+  children?: Category[];
 }
 
 export interface Post {

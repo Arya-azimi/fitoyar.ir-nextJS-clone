@@ -48,13 +48,13 @@ export default function BlogFilter({ categories }: Props) {
       <div className="hidden items-center justify-between gap-4 lg:flex">
         <div className="flex items-center gap-4">
           <div>
-            <label htmlFor="sortBy" className="mr-2 font-semibold">
-              مرتب‌سازی:
+            <label htmlFor="sortBy" className="ml-2 font-semibold">
+              مرتب‌سازی :
             </label>
             <select
               id="sortBy"
               name="sortBy"
-              className="rounded-md border border-gray-300 bg-gray-300 p-2"
+              className="rounded-md border border-gray-300 bg-gray-300 "
               value={currentSortBy}
               onChange={(e) => updateQueryParams("sortBy", e.target.value)}
             >
@@ -63,13 +63,13 @@ export default function BlogFilter({ categories }: Props) {
             </select>
           </div>
           <div>
-            <label htmlFor="category" className="mr-2 font-semibold">
-              دسته‌بندی:
+            <label htmlFor="category" className="ml-2 font-semibold">
+              دسته‌بندی :
             </label>
             <select
               id="category"
               name="category"
-              className="rounded-md border border-gray-300 bg-gray-300 p-2"
+              className="rounded-md border border-gray-300 bg-gray-300 "
               value={currentCategory}
               onChange={(e) => updateQueryParams("category", e.target.value)}
             >
@@ -82,7 +82,7 @@ export default function BlogFilter({ categories }: Props) {
             </select>
           </div>
         </div>
-        <div className="relative">
+        <div className="relative w-[50%]">
           <input
             type="search"
             placeholder="جستجو در مقالات..."

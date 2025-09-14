@@ -32,9 +32,7 @@ export default async function Article({ params }: Props) {
             />
           </div>
         )}
-        <p className="text-lg text-gray-600 dark:text-gray-400">
-          نویسنده : {post.author.name}
-        </p>
+        <p className="text-lg text-gray-600 ">نویسنده : {post.author.name}</p>
       </div>
       <div className="relative mx-auto my-8 h-96 w-full">
         <Image
@@ -45,7 +43,7 @@ export default async function Article({ params }: Props) {
         />
       </div>
 
-      <div className="prose dark:prose-invert mx-auto mt-8 max-w-none">
+      <div className="prose mx-auto mt-8 max-w-none">
         <PortableText value={post.body} />
       </div>
     </article>
