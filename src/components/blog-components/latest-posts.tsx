@@ -15,8 +15,8 @@ export default function LatestPosts({ posts }: Props) {
   const [heroPost, sidePost1, sidePost2] = posts;
 
   return (
-    <section className="max-w-6xl mx-auto py-6">
-      <div className="grid h-[50vh] grid-cols-1 gap-6 lg:grid-cols-4 lg:grid-rows-2">
+    <section className="max-w-6xl mx-auto p-4">
+      <div className="grid  grid-cols-1 gap-6 lg:grid-cols-4 lg:grid-rows-2">
         <div className="col-span-1 row-span-1 lg:col-span-3 lg:row-span-2">
           <Link href={`/blog/${heroPost.slug}`} className="group block h-full">
             <div className="relative h-full min-h-[400px] overflow-hidden rounded-lg shadow-lg">

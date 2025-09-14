@@ -56,25 +56,41 @@ export async function getAllCategories(): Promise<Category[]> {
 
 export async function getFilteredPosts(
   category: string = "all",
-  sortBy: string = "desc"
+  sortBy: string = "desc",
+  searchQuery: string = ""
 ): Promise<Post[]> {
   let query = `*[_type == "post"`;
-  let params = {};
+  let params: { [key: string]: any } = {};
 
   if (category !== "all") {
     query += ` && $category in categories[]->title`;
     params = { ...params, category };
   }
 
+  if (searchQuery) {
+    query += ` && (title match $searchQuery || pt::text(body) match $searchQuery)`;
+    params = { ...params, searchQuery: `*${searchQuery}*` };
+  }
+
   query += `] | order(publishedAt ${sortBy}) {
-        _id,
-        title,
-        "slug": slug.current,
-        mainImage,
-        publishedAt,
-        "author": author->{name, picture},
-        "categories": categories[]->{_id, title}
-    }`;
+      _id,
+      title,
+      "slug": slug.current,
+      mainImage,
+      publishedAt,
+      "author": author->{name, picture},
+      "categories": categories[]->{_id, title}
+  }`;
 
   return client.fetch(query, params);
+}
+
+export async function getCategoriesWithHierarchy(): Promise<Category[]> {
+  return client.fetch(groq`
+    *[_type == "category"]{
+      _id,
+      title,
+      "parent": parent->{_id, title}
+    }
+  `);
 }

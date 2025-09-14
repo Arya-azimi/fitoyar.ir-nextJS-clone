@@ -11,7 +11,8 @@ type Props = {
 };
 
 export default async function Article({ params }: Props) {
-  const post = await getPostBySlug(params.slug);
+  const { slug } = params;
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     notFound();

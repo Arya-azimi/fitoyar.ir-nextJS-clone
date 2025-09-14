@@ -2,7 +2,7 @@
 
 import { Category } from "@/domain/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MoreVertical, Search, X } from "lucide-react";
 
 type Props = {
@@ -16,34 +16,45 @@ export default function BlogFilter({ categories }: Props) {
 
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
 
-  const currentCategory = searchParams.get("category") || "all";
-  const currentSortBy = searchParams.get("sortBy") || "desc";
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get("search") || ""
+  );
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const newParams = new URLSearchParams(searchParams.toString());
+      if (searchTerm) {
+        newParams.set("search", searchTerm);
+      } else {
+        newParams.delete("search");
+      }
+      router.replace(`${pathname}?${newParams.toString()}`, { scroll: false });
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm, pathname, router]);
 
   const updateQueryParams = (name: string, value: string) => {
     const newParams = new URLSearchParams(searchParams.toString());
     newParams.set(name, value);
-    router.push(`${pathname}?${newParams.toString()}`);
+    router.push(`${pathname}?${newParams.toString()}`, { scroll: false });
   };
 
-  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      const searchValue = e.currentTarget.value;
-      updateQueryParams("search", searchValue);
-    }
-  };
+  const currentCategory = searchParams.get("category") || "all";
+  const currentSortBy = searchParams.get("sortBy") || "desc";
 
   return (
-    <div className="mx-auto mb-8 max-w-6xl rounded-md bg-gray-200 p-4 ">
+    <div className="mx-auto mb-8 max-w-6xl rounded-md bg-gray-200 p-4">
       <div className="hidden items-center justify-between gap-4 lg:flex">
         <div className="flex items-center gap-4">
           <div>
             <label htmlFor="sortBy" className="mr-2 font-semibold">
-              مرتب‌سازی :
+              مرتب‌سازی:
             </label>
             <select
               id="sortBy"
               name="sortBy"
-              className="rounded-md border mr-1 border-gray-200 bg-gray-300 p-2 "
+              className="rounded-md border border-gray-300 bg-gray-300 p-2"
               value={currentSortBy}
               onChange={(e) => updateQueryParams("sortBy", e.target.value)}
             >
@@ -53,12 +64,12 @@ export default function BlogFilter({ categories }: Props) {
           </div>
           <div>
             <label htmlFor="category" className="mr-2 font-semibold">
-              دسته‌بندی :
+              دسته‌بندی:
             </label>
             <select
               id="category"
               name="category"
-              className="rounded-md border mr-1 border-gray-200 bg-gray-300 p-2 "
+              className="rounded-md border border-gray-300 bg-gray-300 p-2"
               value={currentCategory}
               onChange={(e) => updateQueryParams("category", e.target.value)}
             >
@@ -75,10 +86,11 @@ export default function BlogFilter({ categories }: Props) {
           <input
             type="search"
             placeholder="جستجو در مقالات..."
-            className="w-full rounded-md bg-gray-300 p-2 pr-10 "
-            onKeyDown={handleSearch}
+            className="w-full rounded-md bg-gray-300 p-2 pr-10"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <Search className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-300" />
+          <Search className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" />
         </div>
       </div>
 
@@ -87,13 +99,17 @@ export default function BlogFilter({ categories }: Props) {
           <div className="flex items-center gap-4">
             <button
               onClick={() => updateQueryParams("sortBy", "desc")}
-              className={`font-semibold ${currentSortBy === "desc" ? "text-blue-600" : ""}`}
+              className={`font-semibold ${
+                currentSortBy === "desc" ? "text-blue-600" : ""
+              }`}
             >
               جديدترين
             </button>
             <button
               onClick={() => updateQueryParams("sortBy", "asc")}
-              className={`font-semibold ${currentSortBy === "asc" ? "text-blue-600" : ""}`}
+              className={`font-semibold ${
+                currentSortBy === "asc" ? "text-blue-600" : ""
+              }`}
             >
               قديمی‌ترين
             </button>
@@ -106,8 +122,9 @@ export default function BlogFilter({ categories }: Props) {
           <input
             type="search"
             placeholder="جستجو در مقالات..."
-            className="w-full rounded-md bg-gray-300 p-2 pr-10 "
-            onKeyDown={handleSearch}
+            className="w-full rounded-md bg-gray-300 p-2 pr-10"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <Search className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500" />
         </div>
