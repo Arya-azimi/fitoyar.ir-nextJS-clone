@@ -2,9 +2,8 @@
 
 import { Category } from "@/domain/types";
 import { useState } from "react";
-import CategoryMenuPanel from "./category-menu-panel";
 import Link from "next/link";
-
+import { CategoryList } from "@/components/shared/category/category-list";
 type Props = {
   categoryTree: Category[];
 };
@@ -18,12 +17,15 @@ export default function CategoryMegaMenu({ categoryTree }: Props) {
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      <Link href="/blog" className="text-black transition-colors">
+      <Link
+        href="/blog"
+        className="text-gray-700 hover:text-red-500 transition-colors"
+      >
         مقالات
       </Link>
       {isOpen && (
-        <div className="absolute top-full pt-2">
-          <CategoryMenuPanel categories={categoryTree} />
+        <div className="absolute top-full pt-2 z-10">
+          <CategoryList categories={categoryTree} />
         </div>
       )}
     </div>

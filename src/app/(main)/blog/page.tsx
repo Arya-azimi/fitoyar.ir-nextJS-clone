@@ -1,19 +1,24 @@
-import { getAllCategories, getFilteredPosts } from "@/lib/queries";
+import { getCategoriesWithHierarchy, getFilteredPosts } from "@/lib/queries";
+import { buildCategoryTree } from "@/lib/utils";
 import LatestPosts from "@/components/blog-components/latest-posts";
 import FilteredBlog from "@/components/blog-components/filtered-blog";
 
 export default async function BlogPage() {
-  const [initialPosts, categories] = await Promise.all([
+  const [initialPostsResult, flatCategories] = await Promise.all([
     getFilteredPosts(),
-    getAllCategories(),
+    getCategoriesWithHierarchy(),
   ]);
+
+  const initialPosts = Array.isArray(initialPostsResult)
+    ? initialPostsResult
+    : [];
+  const categoryTree = buildCategoryTree(flatCategories || []);
 
   return (
     <main>
       <LatestPosts />
-      <div className="container mx-auto px-4 py-8">
-        <h2 className="mb-8 text-center text-3xl font-bold">همه مقالات</h2>
-        <FilteredBlog initialPosts={initialPosts} categories={categories} />
+      <div className="max-w-6xl mx-auto p-4">
+        <FilteredBlog initialPosts={initialPosts} categoryTree={categoryTree} />
       </div>
     </main>
   );
