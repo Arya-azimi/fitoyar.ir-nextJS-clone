@@ -22,7 +22,7 @@ const importantLinks = [
 
 export function Footer() {
   return (
-    <footer className="w-full flex justify-center p-4 sm:p-8 bg-gray-50 mt-10">
+    <footer className="w-full max-w-6xl mx-auto flex justify-center p-4 bg-gray-50 mt-6">
       <div className="w-full max-w-6xl bg-gray-100 p-8 rounded-3xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-right">
           {/* ستون اول: درباره ما */}

@@ -66,3 +66,9 @@ export async function getCategoriesWithHierarchy(): Promise<Category[]> {
     }
   `);
 }
+
+export async function getRecentPosts(limit: number = 6): Promise<Post[]> {
+  return client.fetch(groq`*[_type == "post"] | order(publishedAt desc)[0...${limit}] {
+    ${postFields}
+  }`);
+}
