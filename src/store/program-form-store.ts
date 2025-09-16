@@ -6,7 +6,8 @@ type FormState = {
   height: number | null;
   weight: number | null;
   goal: string | null;
-  activityLevel: string | null;
+  targetWeight: number | null;
+  duration: number | null;
 };
 
 type FormActions = {
@@ -14,6 +15,9 @@ type FormActions = {
   setAge: (age: number | null) => void;
   setHeight: (height: number | null) => void;
   setWeight: (weight: number | null) => void;
+  setGoal: (goal: string | null) => void;
+  setTargetWeight: (weight: number | null) => void;
+  setDuration: (weeks: number | null) => void;
 };
 
 export const useProgramFormStore = create<FormState & FormActions>((set) => ({
@@ -22,10 +26,14 @@ export const useProgramFormStore = create<FormState & FormActions>((set) => ({
   height: null,
   weight: null,
   goal: null,
-  activityLevel: null,
+  targetWeight: null,
+  duration: null,
 
   setGender: (gender) => set({ gender }),
   setAge: (age) => set({ age }),
   setHeight: (height) => set({ height }),
   setWeight: (weight) => set({ weight }),
+  setGoal: (goal) => set({ goal }),
+  setTargetWeight: (targetWeight) => set({ targetWeight }),
+  setDuration: (duration) => set({ duration }),
 }));
