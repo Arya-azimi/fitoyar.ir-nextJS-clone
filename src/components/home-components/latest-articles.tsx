@@ -17,9 +17,7 @@ type Props = {
 export function LatestArticles({ posts }: Props) {
   return (
     <main className="mt-12">
-      <SectionTitle>
-        <h2>آخرین مقالات</h2>
-      </SectionTitle>
+      <SectionTitle>آخرین مقالات</SectionTitle>
       <section className="max-w-6xl mx-auto p-4">
         <Swiper
           modules={[Pagination]}

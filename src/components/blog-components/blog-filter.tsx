@@ -46,13 +46,10 @@ export default function BlogFilter({ categoryTree }: Props) {
       <div className="hidden items-center justify-between gap-4 lg:flex">
         <div className="flex items-center gap-4">
           <div>
-            <label htmlFor="sortBy" className="mr-2 font-semibold">
-              مرتب‌سازی:
-            </label>
             <select
               id="sortBy"
               name="sortBy"
-              className="rounded-md border border-gray-300 bg-gray-300 p-2"
+              className="rounded-md border border-gray-300 bg-gray-300 p-1"
               value={currentSortBy}
               onChange={(e) => updateQueryParams("sortBy", e.target.value)}
             >

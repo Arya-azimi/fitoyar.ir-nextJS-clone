@@ -42,6 +42,13 @@ export function MobileMenu({ isOpen, onClose, categoryTree }: MobileMenuProps) {
           >
             صفحه اصلی
           </Link>
+          <Link
+            href="/program"
+            onClick={onClose}
+            className="w-full rounded-md p-3 text-right text-lg font-semibold hover:bg-gray-100 "
+          >
+            برنامه بدنسازی
+          </Link>
           <MobileCategoryMenu
             categories={categoryTree}
             closeMainMenu={onClose}

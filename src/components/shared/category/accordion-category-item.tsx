@@ -46,6 +46,15 @@ export function AccordionCategoryItem({ category }: Props) {
           >
             همه {category.title}
           </Link>
+          {/* 
+          <Link
+        href={`/blog?category=${category.title}`}
+        className="flex items-center justify-between rounded-md p-3 hover:bg-gray-100"
+      >
+        <span>{category.title}</span>
+        {hasChildren && <ChevronLeft className="h-4 w-4" />}
+      </Link>
+          */}
           <AccordionCategoryList categories={category.children!} />
         </div>
       )}

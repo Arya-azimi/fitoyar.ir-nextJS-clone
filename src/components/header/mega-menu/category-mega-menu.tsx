@@ -19,7 +19,7 @@ export default function CategoryMegaMenu({ categoryTree }: Props) {
     >
       <Link
         href="/blog"
-        className="text-gray-700 hover:text-red-500 transition-colors"
+        className="text-black hover:text-red-500 transition-colors"
       >
         مقالات
       </Link>

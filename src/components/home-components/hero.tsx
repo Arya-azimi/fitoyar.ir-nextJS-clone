@@ -5,7 +5,7 @@ export function HeroSection() {
   return (
     <section className="w-full flex justify-center py-12 lg:py-20 px-4">
       <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        <div className="text-right space-y-6 border-r-2 border-red-500 pr-6">
+        <div className="text-right space-y-6 md:border-r-2 md:border-red-500 md:pr-6">
           <h1 className="text-3xl lg:text-4xl font-extrabold text-gray-800">
             از خوب به عالی، با <span className="text-red-500">فیتویار!</span>
           </h1>
