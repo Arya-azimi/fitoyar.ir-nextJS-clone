@@ -2,9 +2,16 @@
 
 import { useState } from "react";
 import { useProgramFormStore } from "@/store/program-form-store";
-import { StepPersonalInfo } from "./steps/step-personal-info.tsx";
-import { StepGoal } from "./steps/step-goal";
+import {
+  StepPersonalInfo,
+  StepGoal,
+  StepHistory,
+  StepHealthStatus,
+  StepDrugHistory,
+} from "./steps";
 import { ProgressBar } from "./progress-bar";
+import { StepFoodRestriction } from "./steps/step-food-restriction";
+import { StepDiet } from "./steps/step-diet";
 
 const TOTAL_STEPS = 19;
 
@@ -30,6 +37,37 @@ export function ProgramForm() {
           formData.targetWeight !== null &&
           formData.duration !== null
         );
+      case 3:
+        return formData.sportHistory !== null;
+      case 4:
+        return (
+          formData.healthStatus === false ||
+          (formData.healthStatus === true &&
+            formData.healthStatusDesc !== null &&
+            formData.healthStatusDesc.length > 10)
+        );
+      case 5:
+        return (
+          formData.drugHistory === false ||
+          (formData.drugHistory === true &&
+            formData.drugHistoryDesc !== null &&
+            formData.drugHistoryDesc.length > 10)
+        );
+      case 6:
+        return (
+          formData.foodRestriction === false ||
+          (formData.foodRestriction === true &&
+            formData.foodRestrictionDesc !== null &&
+            formData.foodRestrictionDesc.length > 10)
+        );
+      case 7:
+        return (
+          formData.diet === "omnivorous" ||
+          formData.diet === "meat-eater" ||
+          (formData.diet === "herbivor" &&
+            formData.dietDesc !== null &&
+            formData.dietDesc.length > 10)
+        );
       default:
         return false;
     }
@@ -44,13 +82,18 @@ export function ProgramForm() {
       <div>
         {step === 1 && <StepPersonalInfo />}
         {step === 2 && <StepGoal />}
+        {step === 3 && <StepHistory />}
+        {step === 4 && <StepHealthStatus />}
+        {step === 5 && <StepDrugHistory />}
+        {step === 6 && <StepFoodRestriction />}
+        {step === 7 && <StepDiet />}
       </div>
 
       <div className="mt-8 flex justify-between">
         {step > 1 ? (
           <button
             onClick={prevStep}
-            className="rounded-lg bg-gray-300 px-8 py-3 font-bold text-gray-800 hover:bg-gray-400"
+            className="rounded-lg cursor-pointer bg-gray-300 px-8 py-3 font-bold text-gray-800 hover:bg-gray-400"
           >
             قبلی
           </button>
@@ -62,7 +105,7 @@ export function ProgramForm() {
           <button
             onClick={nextStep}
             disabled={!isStepComplete()}
-            className="rounded-lg bg-red-500 px-8 py-3 font-bold text-white transition-colors hover:bg-red-600 disabled:bg-red-400 disabled:cursor-not-allowed"
+            className="rounded-lg cursor-pointer bg-red-500 px-8 py-3 font-bold text-white transition-colors hover:bg-red-600 disabled:bg-red-400 disabled:cursor-not-allowed"
           >
             بعدی
           </button>
