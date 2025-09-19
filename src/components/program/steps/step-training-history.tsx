@@ -23,7 +23,7 @@ export function StepHistory() {
     <div>
       <div className="w-[80px] h-[80px] flex justify-center items-center rounded-md shadow-md bg-gray-200 mb-6 ">
         <Image
-          src="/program/سابقه تمرین.svg"
+          src="/program/ورزش.svg"
           alt="فیتویار لوگو"
           width={60}
           height={60}

@@ -4,14 +4,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
 
-type Props = {
-  params: {
-    slug: string;
-  };
-};
-
-export default async function Article({ params }: Props) {
-  const { slug } = params;
+export default async function Article(props: PageProps<"/blog/[slug]">) {
+  const { slug } = await props.params;
   const post = await getPostBySlug(slug);
 
   if (!post) {

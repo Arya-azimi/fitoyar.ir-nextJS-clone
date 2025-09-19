@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "create:public-routes": "tsx ./scripts/generate-public-routes.ts",
+    "preinstall": "npm run create:public-routes",
+    "predev": "npm run create:public-routes"
   },
   "dependencies": {
     "@portabletext/react": "^4.0.3",

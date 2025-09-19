@@ -1,4 +1,4 @@
-import { AboutUsHero } from "@/components/about-us-components/about-us-hero";
+import { AboutUsHero } from "@/components/about-us/about-us-hero";
 
 export default function AboutUs() {
   return (

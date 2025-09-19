@@ -21,6 +21,7 @@ export function StepGoal() {
     setDuration,
   } = useProgramFormStore();
 
+  // ?
   const baseClasses =
     "flex flex-col items-center justify-center gap-4 p-4 shadow-lg rounded-lg cursor-pointer transition-colors";
   const selectedClasses =

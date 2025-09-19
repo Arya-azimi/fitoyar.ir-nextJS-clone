@@ -3,21 +3,14 @@
 import { useProgramFormStore } from "@/store/program-form-store";
 import Image from "next/image";
 
-const StatusValues = [
-  { id: 1, value: true, text: "بله" },
-  { id: 2, value: false, text: "خیر" },
+const DrugStatus = [
+  { id: 1, value: true, text: "دارم" },
+  { id: 2, value: false, text: "ندارم" },
 ];
 
-export function StepHealthStatus() {
-  const {
-    healthStatus,
-    setHealthStatus,
-    healthStatusDesc,
-    setHealthStatusDesc,
-  } = useProgramFormStore();
-
-  console.log(healthStatus);
-  console.log(healthStatusDesc);
+export function StepDrugHistory() {
+  const { drugHistory, drugHistoryDesc, setDrugHistory, setDrugHistoryDesc } =
+    useProgramFormStore();
 
   const baseClasses =
     "flex flex-col items-center justify-center gap-4 p-4 shadow-lg rounded-lg cursor-pointer transition-colors";
@@ -31,9 +24,9 @@ export function StepHealthStatus() {
     "focus:outline-hidden placeholder:italic border border-red-100 focus:border-red-300 w-full p-4 text-sm font-medium rounded-lg";
 
   const handleStatusChange = (value: boolean) => {
-    setHealthStatus(value);
+    setDrugHistory(value);
     if (value === false) {
-      setHealthStatusDesc(null);
+      setDrugHistoryDesc(null);
     }
   };
 
@@ -41,30 +34,32 @@ export function StepHealthStatus() {
     <div>
       <div className="w-[80px] h-[80px] flex justify-center items-center rounded-md shadow-md bg-gray-200 mb-6 ">
         <Image
-          src="/program/وضعیت سلامتی.svg"
+          // ?
+          src="/program/مصرف داروی خاص.svg"
           alt="فیتویار لوگو"
           width={70}
           height={70}
         />
       </div>
-      <h2 className="text-xl font-semibold mb-2">وضعیت سلامتی</h2>
+      <h2 className="text-xl font-semibold mb-2">سابقه مصرف داروهای خاص</h2>
       <p className="text-gray-500 mb-6">
-        درگیر بیماری خاصی هستی یا داشتی؟ دیابت، مازوخیسم، نرمی مفصل و ...
+        مثل: داروهای قند، داروهای تیروئید، ضدافسردگی، داروهای قلبی،
+        هورمونی...{" "}
       </p>
       <div className="grid grid-cols-1 gap-4 px-4">
-        {StatusValues.map((SV) => (
+        {DrugStatus.map((DS) => (
           <div
-            key={SV.id}
-            onClick={() => handleStatusChange(SV.value)}
+            key={DS.id}
+            onClick={() => handleStatusChange(DS.value)}
             className={`${baseClasses} ${
-              healthStatus === SV.value ? selectedClasses : unselectedClasses
+              drugHistory === DS.value ? selectedClasses : unselectedClasses
             } `}
           >
-            <span className="text-xl font-medium">{SV.text}</span>
+            <span className="text-xl font-medium">{DS.text}</span>
           </div>
         ))}
 
-        {healthStatus === true && (
+        {drugHistory === true && (
           <div>
             <p className="text-gray-500 mb-2 font-semibold">
               توضیحات (الزامی) :
@@ -72,19 +67,19 @@ export function StepHealthStatus() {
             <div className="grid grid-cols-1 gap-4">
               <textarea
                 onChange={(e) =>
-                  setHealthStatusDesc(e.target.value ? e.target.value : null)
+                  setDrugHistoryDesc(e.target.value ? e.target.value : null)
                 }
                 name=""
                 className={` ${textareaStyle}`}
                 id=""
-                value={healthStatusDesc || ""}
+                value={drugHistoryDesc || ""}
               ></textarea>
             </div>
           </div>
         )}
 
-        {healthStatus === true &&
-        (!healthStatusDesc || healthStatusDesc.length <= 10) ? (
+        {drugHistory === true &&
+        (!drugHistoryDesc || drugHistoryDesc.length <= 10) ? (
           <p className="text-red-800 text-lg font-bold text-center p-2 border border-red-600 rounded-lg">
             اطلاعات بیشتری وارد کنید !!!
           </p>

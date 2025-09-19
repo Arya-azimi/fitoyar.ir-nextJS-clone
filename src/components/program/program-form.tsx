@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { createElement, useState } from "react";
 import { useProgramFormStore } from "@/store/program-form-store";
 import {
   StepPersonalInfo,
@@ -8,12 +8,34 @@ import {
   StepHistory,
   StepHealthStatus,
   StepDrugHistory,
+  StepFoodRestriction,
+  StepDiet,
+  StepSportSupplementHistory,
+  StepAmountOfExercise,
 } from "./steps";
 import { ProgressBar } from "./progress-bar";
-import { StepFoodRestriction } from "./steps/step-food-restriction";
-import { StepDiet } from "./steps/step-diet";
 
-const TOTAL_STEPS = 19;
+const FORMS = [
+  StepPersonalInfo,
+  StepGoal,
+  StepHistory,
+  StepHealthStatus,
+  StepDrugHistory,
+  StepFoodRestriction,
+  StepDiet,
+  StepSportSupplementHistory,
+  StepAmountOfExercise,
+];
+
+enum Validation {
+  PersonalInfo,
+  Diet,
+  Goal,
+}
+
+const validationMap = {
+  [Validation.PersonalInfo]: () => {},
+};
 
 export function ProgramForm() {
   const [step, setStep] = useState(1);
@@ -24,7 +46,7 @@ export function ProgramForm() {
 
   const isStepComplete = () => {
     switch (step) {
-      case 1:
+      case Validation.PersonalInfo:
         return (
           formData.gender !== null &&
           formData.age !== null &&
@@ -68,6 +90,15 @@ export function ProgramForm() {
             formData.dietDesc !== null &&
             formData.dietDesc.length > 10)
         );
+      case 8:
+        return (
+          formData.sportSupplementHistory === false ||
+          (formData.sportSupplementHistory === true &&
+            formData.sportSupplementDesc !== null &&
+            formData.sportSupplementDesc.length > 10)
+        );
+      case 9:
+        return formData.exerciseAmount !== null;
       default:
         return false;
     }
@@ -76,18 +107,12 @@ export function ProgramForm() {
   return (
     <div className="container mx-auto max-w-2xl lg:max-w-4xl p-8 shadow-2xl rounded-xl">
       <div className="mb-8">
-        <ProgressBar currentStep={step} totalSteps={TOTAL_STEPS} />
+        <ProgressBar currentStep={step} totalSteps={FormData.length - 1} />
       </div>
 
-      <div>
-        {step === 1 && <StepPersonalInfo />}
-        {step === 2 && <StepGoal />}
-        {step === 3 && <StepHistory />}
-        {step === 4 && <StepHealthStatus />}
-        {step === 5 && <StepDrugHistory />}
-        {step === 6 && <StepFoodRestriction />}
-        {step === 7 && <StepDiet />}
-      </div>
+      <div>{createElement(FORMS[step - 1])}</div>
+
+      {/* componoent */}
 
       <div className="mt-8 flex justify-between">
         {step > 1 ? (

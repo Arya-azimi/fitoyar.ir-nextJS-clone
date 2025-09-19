@@ -1,4 +1,4 @@
-import { ProgramForm } from "@/components/program-components/program-form";
+import { ProgramForm } from "@/components/program/program-form";
 
 export default function ProgramPage() {
   return (
