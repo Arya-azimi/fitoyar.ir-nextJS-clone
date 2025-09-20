@@ -1,124 +1,38 @@
 "use client";
 
-import { createElement, useState } from "react";
-import { useProgramFormStore } from "@/store/program-form-store";
-import {
-  StepPersonalInfo,
-  StepGoal,
-  StepHistory,
-  StepHealthStatus,
-  StepDrugHistory,
-  StepFoodRestriction,
-  StepDiet,
-  StepSportSupplementHistory,
-  StepAmountOfExercise,
-} from "./steps";
+import { useState } from "react";
 import { ProgressBar } from "./progress-bar";
+import { FORM_STEPS } from "@/lib/constants/program-page/program-flow";
 
-const FORMS = [
-  StepPersonalInfo,
-  StepGoal,
-  StepHistory,
-  StepHealthStatus,
-  StepDrugHistory,
-  StepFoodRestriction,
-  StepDiet,
-  StepSportSupplementHistory,
-  StepAmountOfExercise,
-];
-
-enum Validation {
-  PersonalInfo,
-  Diet,
-  Goal,
-}
-
-const validationMap = {
-  [Validation.PersonalInfo]: () => {},
-};
+const TOTAL_STEPS = FORM_STEPS.length;
 
 export function ProgramForm() {
   const [step, setStep] = useState(1);
-  const formData = useProgramFormStore((state) => state);
 
-  const nextStep = () => setStep((prev) => prev + 1);
-  const prevStep = () => setStep((prev) => prev - 1);
+  const nextStep = () => setStep((prev) => Math.min(prev + 1, TOTAL_STEPS));
+  const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
   const isStepComplete = () => {
-    switch (step) {
-      case Validation.PersonalInfo:
-        return (
-          formData.gender !== null &&
-          formData.age !== null &&
-          formData.height !== null &&
-          formData.weight !== null
-        );
-      case 2:
-        return (
-          formData.goal !== null &&
-          formData.targetWeight !== null &&
-          formData.duration !== null
-        );
-      case 3:
-        return formData.sportHistory !== null;
-      case 4:
-        return (
-          formData.healthStatus === false ||
-          (formData.healthStatus === true &&
-            formData.healthStatusDesc !== null &&
-            formData.healthStatusDesc.length > 10)
-        );
-      case 5:
-        return (
-          formData.drugHistory === false ||
-          (formData.drugHistory === true &&
-            formData.drugHistoryDesc !== null &&
-            formData.drugHistoryDesc.length > 10)
-        );
-      case 6:
-        return (
-          formData.foodRestriction === false ||
-          (formData.foodRestriction === true &&
-            formData.foodRestrictionDesc !== null &&
-            formData.foodRestrictionDesc.length > 10)
-        );
-      case 7:
-        return (
-          formData.diet === "omnivorous" ||
-          formData.diet === "meat-eater" ||
-          (formData.diet === "herbivor" &&
-            formData.dietDesc !== null &&
-            formData.dietDesc.length > 10)
-        );
-      case 8:
-        return (
-          formData.sportSupplementHistory === false ||
-          (formData.sportSupplementHistory === true &&
-            formData.sportSupplementDesc !== null &&
-            formData.sportSupplementDesc.length > 10)
-        );
-      case 9:
-        return formData.exerciseAmount !== null;
-      default:
-        return false;
-    }
+    const currentValidation = FORM_STEPS[step - 1]?.validation;
+    if (!currentValidation) return false;
+    return currentValidation();
   };
 
+  const CurrentStepComponent = FORM_STEPS[step - 1]?.component;
+
   return (
-    <div className="container mx-auto max-w-2xl lg:max-w-4xl p-8 shadow-2xl rounded-xl">
+    <div className="container mx-auto max-w-4xl rounded-lg border border-gray-100 p-8 shadow-xl">
       <div className="mb-8">
-        <ProgressBar currentStep={step} totalSteps={FormData.length - 1} />
+        <ProgressBar currentStep={step} totalSteps={TOTAL_STEPS} />
       </div>
 
-      <div>{createElement(FORMS[step - 1])}</div>
+      <div>{CurrentStepComponent && <CurrentStepComponent />}</div>
 
-      {/* componoent */}
-
-      <div className="mt-8 flex justify-between">
+      <div className="mt-8 flex justify-between gap-4">
         {step > 1 ? (
           <button
             onClick={prevStep}
-            className="rounded-lg cursor-pointer bg-gray-300 px-8 py-3 font-bold text-gray-800 hover:bg-gray-400"
+            className="rounded-lg bg-gray-300 px-8 py-3 font-bold text-gray-800 transition-colors hover:bg-gray-400"
           >
             قبلی
           </button>
@@ -130,7 +44,7 @@ export function ProgramForm() {
           <button
             onClick={nextStep}
             disabled={!isStepComplete()}
-            className="rounded-lg cursor-pointer bg-red-500 px-8 py-3 font-bold text-white transition-colors hover:bg-red-600 disabled:bg-red-400 disabled:cursor-not-allowed"
+            className="rounded-lg bg-red-500 px-8 py-3 font-bold text-white transition-colors hover:bg-red-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
             بعدی
           </button>

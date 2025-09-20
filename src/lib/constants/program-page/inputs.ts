@@ -1,4 +1,3 @@
-// src/lib/form-definitions.ts
 import { PersonalInfoSchema } from "@/store/program-form-store";
 
 type PersonalInfoKey = keyof Omit<

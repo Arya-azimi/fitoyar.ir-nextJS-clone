@@ -1,21 +1,21 @@
 "use client";
 
 import { ProgramIntroduction } from "@/components/ui/program/program-introduction";
-import { PublicSrc } from "@/lib/constants/public-src";
+import { PublicSrc } from "@/lib/constants/program-page/public-src";
 import { personalInfoStore } from "@/store/program-form-store";
 
 import {
-  // baseClasses,
+  baseClasses,
   inputClasses,
-  // selectedClasses,
-  // unselectedClasses,
+  selectedClasses,
+  unselectedClasses,
 } from "../program-clases";
-import { personalInfoSections } from "@/lib/constants/inputs";
+import { personalInfoSections } from "@/lib/constants/program-page/inputs";
 
 export function StepPersonalInfo() {
   const {
-    // gender,
-    // setGender,
+    gender,
+    setGender,
     age,
     setAge,
     height,
@@ -35,65 +35,81 @@ export function StepPersonalInfo() {
       />
 
       <div className="space-y-6">
-        {personalInfoSections.map((sec) => (
-          <div key={sec.underInputTitle}>
+        {personalInfoSections.map((section) => (
+          <div key={section.underInputTitle}>
             <h3 className="text-lg font-medium mt-6 mb-2 px-2">
-              {sec.underInputTitle}
+              {section.underInputTitle}
             </h3>
+
             <div
               className={
-                sec.inputs.length > 1 ? "grid grid-cols-2 gap-4 px-4" : "px-4"
+                section.inputs.length > 1
+                  ? "grid grid-cols-2 gap-4 px-4"
+                  : "px-4"
               }
             >
-              {sec.inputs.map((input) => (
-                <div key={input.label}>
-                  {input.type === "radio" && (
-                    <div className="grid grid-cols-2 gap-4 px-4"></div>
-                  )}
-                </div>
-              ))}
+              {section.inputs.map((inputConfig) => {
+                if (inputConfig.type === "radio") {
+                  return (
+                    <label
+                      key={inputConfig.value}
+                      className={`${baseClasses} ${
+                        gender === inputConfig.value
+                          ? selectedClasses
+                          : unselectedClasses
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name={inputConfig.name}
+                        value={inputConfig.value}
+                        checked={gender === inputConfig.value}
+                        onChange={() =>
+                          setGender(inputConfig.value as "male" | "female")
+                        }
+                        className="sr-only"
+                      />
+                      <span className="text-xl font-medium">
+                        {inputConfig.label}
+                      </span>
+                    </label>
+                  );
+                }
+
+                if (inputConfig.type === "number") {
+                  let value, setValue;
+                  if (inputConfig.name === "age") {
+                    value = age;
+                    setValue = setAge;
+                  } else if (inputConfig.name === "height") {
+                    value = height;
+                    setValue = setHeight;
+                  } else if (inputConfig.name === "weight") {
+                    value = weight;
+                    setValue = setWeight;
+                  }
+
+                  return (
+                    <input
+                      key={inputConfig.name}
+                      type="number"
+                      placeholder={inputConfig.placeholder}
+                      className={inputClasses}
+                      value={value || ""}
+                      onChange={(e) =>
+                        setValue(
+                          e.target.value ? parseInt(e.target.value) : null
+                        )
+                      }
+                    />
+                  );
+                }
+
+                return null;
+              })}
             </div>
           </div>
         ))}
-      </div>
-
-      <h3 className="text-lg font-medium mt-6 mb-2 px-2">سن (سال)</h3>
-      <div className="px-4">
-        <input
-          type="number"
-          placeholder="مثال: 25"
-          className={inputClasses}
-          value={age || ""}
-          onChange={(e) =>
-            setAge(e.target.value ? parseInt(e.target.value) : null)
-          }
-        />
-      </div>
-
-      <h3 className="text-lg font-medium mt-6 mb-2 px-2 ">قد (سانتی‌متر)</h3>
-      <div className="px-4">
-        <input
-          type="number"
-          placeholder="مثال: 180"
-          className={inputClasses}
-          value={height || ""}
-          onChange={(e) =>
-            setHeight(e.target.value ? parseInt(e.target.value) : null)
-          }
-        />
-      </div>
-
-      <h3 className="text-lg font-medium mt-6 mb-2 px-2">وزن فعلی (کیلوگرم)</h3>
-      <div className="px-4">
-        <input
-          type="number"
-          placeholder="مثال: 85"
-          className={inputClasses}
-          value={weight || ""}
-          onChange={(e) =>
-            setWeight(e.target.value ? parseInt(e.target.value) : null)
-          }
-        />
       </div>
     </div>
   );
